@@ -2,11 +2,7 @@
 using Catalog.API.Repositories.Interfaces;
 using DnsClient.Internal;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace Catalog.API.Controllers
 {
