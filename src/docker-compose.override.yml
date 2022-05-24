@@ -4,12 +4,22 @@ services:
   catalogdb:
     image: mongo
 
+  basketdb:
+    image: redis:alpine
+
   catalog.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "DatabaseSettings:ConnectionString=mongodb://localhost:27017"
+      - "DatabaseSettings:ConnectionString=mongodb://catalogdb:27017"
     ports:
       - "8000:80"
+
+  basket.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DataBaseConnection=mongodb://basketdb:27017"
+    ports:
+      - "8001:80"
 
 volumes:
   mongo_data:
