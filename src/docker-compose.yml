@@ -2,18 +2,22 @@ version: '3.4'
 
 services:
   catalogdb:
-    container_name: catalogdb
-    restart: always
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
-
+    image: mongo
+    
   basketdb:
-    container_name: basketdb
-    restart: always
-    ports:
-      - "6379:6379"
+    image: redis:alpine
+
+  redis-commander:
+    image: ghcr.io/joeferner/redis-commander:latest
+
+  discountdb:
+    image: postgres
+
+  pgadmin:
+    image: dpage/pgadmin4  
+
+  portainer:
+    image: portainer/portainer-ce
 
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
@@ -37,3 +41,8 @@ services:
       context: .
       dockerfile: Services/Basket/Basket.API/Dockerfile
 
+volumes:
+  mongo_data:
+  postgres_data:
+  pgadmin_data:
+  portainer_data:
