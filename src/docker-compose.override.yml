@@ -68,7 +68,7 @@ services:
   basket.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:DataBaseConnection=localhost:6376"
+      - "ConnectionStrings:DataBaseConnection=localhost:6379"
       - "GrpcSetting:DiscountUrl=discount.grpc"
     ports:
       - "8001:80"
