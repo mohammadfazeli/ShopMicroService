@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Ordering.Application.Features.Orders.Commands.UpdateOrder
 {
-    public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, bool>
+    public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand>
     {
         private readonly IMapper _mapper;
         private readonly IOrderRepository _orderRepositpry;
@@ -28,21 +28,21 @@ namespace Ordering.Application.Features.Orders.Commands.UpdateOrder
             _logger = logger;
         }
 
-        public async Task<bool> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
         {
-            var order = _orderRepositpry.GetByIdAsync(request.Id);
+            var orderToUpdate = await _orderRepositpry.GetByIdAsync(request.Id);
 
-            if (order == null)
+            if (orderToUpdate == null)
             {
                 _logger.LogError($"Order {request.Id} Not Founded");
-                throw new NotFoundException(nameof(order), request.Id);
-
+                throw new NotFoundException(nameof(orderToUpdate), request.Id);
             }
 
-            Order editOrder = _mapper.Map<Order>(request);
+            //Order editOrder = _mapper.Map<Order>(request);
+            _mapper.Map(request, orderToUpdate, typeof(UpdateOrderCommand), typeof(Order));
 
-            return await _orderRepositpry.UpdateAsync(editOrder);
-
+            await _orderRepositpry.UpdateAsync(orderToUpdate);
+            return Unit.Value;
         }
     }
 }

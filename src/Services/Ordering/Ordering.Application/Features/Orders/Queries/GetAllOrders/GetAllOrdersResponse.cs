@@ -1,10 +1,7 @@
-﻿using MediatR;
-
-namespace Ordering.Application.Features.Orders.Commands.UpdateOrder
+﻿namespace Ordering.Application.Features.Orders.Queries.GetAllOrders
 {
-    public class UpdateOrderCommand : IRequest
+    public class GetAllOrdersResponse
     {
-
         public int Id { get; set; }
         public string UserName { get; set; }
         public decimal TotalPrice { get; set; }

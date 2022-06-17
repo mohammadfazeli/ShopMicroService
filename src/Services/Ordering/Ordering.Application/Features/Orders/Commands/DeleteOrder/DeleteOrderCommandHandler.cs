@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using Ordering.Application.Contracts.Persistence;
 using Ordering.Application.Exceptions;
-using Ordering.Application.Features.Orders.Commands.AddOrder;
 using System.Threading;
 using System.Threading.Tasks;
 
