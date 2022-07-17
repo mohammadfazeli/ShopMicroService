@@ -37,6 +37,26 @@ services:
     volumes:
       - postgres_data:/var/lib/postgressql/data/
 
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+        - "5672:5672"
+        - "15672:15672"
+
+  #ordering.api:
+  #  container_name: ordering.api
+  #  environment:
+  #      - ASPNETCORE_ENVIRONMENT=Development
+  #      - "ConnectionStrings:OrderingConnectionString=Server=localhost;Database=OrderDb;User Id=farhad;Password=123"            
+  #      #- "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+  #      #- "ElasticConfiguration:Uri=http://elasticsearch:9200"
+  #  depends_on:
+  #      - orderdb
+  #      - rabbitmq
+  #  ports:
+  #      - "8004:80"
+
   pgadmin:
     container_name: pgadmin
     environment:
