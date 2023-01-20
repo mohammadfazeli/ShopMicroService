@@ -44,18 +44,18 @@ services:
         - "5672:5672"
         - "15672:15672"
 
-  #ordering.api:
-  #  container_name: ordering.api
-  #  environment:
-  #      - ASPNETCORE_ENVIRONMENT=Development
-  #      - "ConnectionStrings:OrderingConnectionString=Server=localhost;Database=OrderDb;User Id=farhad;Password=123"            
-  #      #- "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
-  #      #- "ElasticConfiguration:Uri=http://elasticsearch:9200"
-  #  depends_on:
-  #      - orderdb
-  #      - rabbitmq
-  #  ports:
-  #      - "8004:80"
+  ordering.api:
+    container_name: ordering.api
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - "ConnectionStrings:OrderingConnectionString=Server=localhost;Database=OrderDb;User Id=farhad;Password=123"            
+        - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+        #- "ElasticConfiguration:Uri=http://elasticsearch:9200"
+    depends_on:
+        - orderdb
+        - rabbitmq
+    ports:
+        - "8004:80"
 
   pgadmin:
     container_name: pgadmin
@@ -90,6 +90,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings:DataBaseConnection=localhost:6379"
       - "GrpcSetting:DiscountUrl=discount.grpc"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+    depends_on:
+      - rabbitmq
     ports:
       - "8001:80"
   
@@ -99,7 +102,6 @@ services:
       - "DatabaseSettings:ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=admin;"
     ports:
       - "8002:80"
-
 
   discount.grpc:
     environment:
